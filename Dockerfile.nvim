@@ -1,0 +1,23 @@
+FROM ubuntu:22.04
+
+ENV TZ Asia/Tokyo
+ARG UID
+ARG GID
+ARG USERNAME=neovim
+
+RUN apt-get update && apt-get install -y curl git sudo tmux make gcc && \
+    # nvim install 
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
+    chmod u+x nvim.appimage && \
+    ./nvim.appimage --appimage-extract && \
+    ./squashfs-root/AppRun --version && \
+    ln -s /squashfs-root/AppRun /usr/bin/nvim
+
+RUN groupadd -g ${GID} ${USERNAME} && \
+    useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME}
+
+COPY .config/ /home/${USERNAME}/.config/
+USER ${USERNAME}
+WORKDIR /workspaces/
+
+RUN nvim --headless "+Lazy! sync" +qa
