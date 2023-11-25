@@ -2,10 +2,12 @@ version: "3"
 services:
   editor:
     build:
+      context: .
       dockerfile: Dockerfile.nvim
       args:
         UID: 1000
         GID: 1000
+        PROJECT: ${COMPOSE_PROJECT_NAME}
     volumes:
       - ".:/workspaces/${COMPOSE_PROJECT_NAME}"
       - "${SSH_AUTH_SOCK}:/tmp/ssh-agent.sock"

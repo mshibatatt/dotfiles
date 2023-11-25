@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 ENV TZ Asia/Tokyo
 ARG UID
 ARG GID
+ARG PROJECT
 ARG USERNAME=neovim
 
 RUN apt-get update && apt-get install -y curl git sudo tmux make gcc && \
@@ -16,8 +17,8 @@ RUN apt-get update && apt-get install -y curl git sudo tmux make gcc && \
 RUN groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME}
 
-COPY .config/ /home/${USERNAME}/.config/
+COPY dotfiles/.config/ /home/${USERNAME}/.config/
 USER ${USERNAME}
-WORKDIR /workspaces/
+WORKDIR /workspaces/${PROJECT}/
 
 RUN nvim --headless "+Lazy! sync" +qa
