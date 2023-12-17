@@ -18,6 +18,7 @@ RUN groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME}
 
 COPY dotfiles/.config/ /home/${USERNAME}/.config/
+COPY dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
 USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
