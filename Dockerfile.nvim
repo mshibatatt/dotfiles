@@ -19,6 +19,9 @@ RUN groupadd -g ${GID} ${USERNAME} && \
 
 COPY dotfiles/.config/ /home/${USERNAME}/.config/
 COPY dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
+COPY dotfiles/.scripts /home/${USERNAME}/.scripts
+RUN echo "alias ide='sh ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
+    echo "alias apply_nvim='sh ~/.scripts/apply.sh'" >> /home/${USERNAME}/.bashrc 
 USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
