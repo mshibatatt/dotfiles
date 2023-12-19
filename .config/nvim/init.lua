@@ -12,6 +12,7 @@ vim.o.softtabstop = 4
 vim.o.expandtab = true -- space instead of tab
 vim.o.autoindent = true
 vim.o.showmode = false -- use lualine to show status
+vim.o.termguicolors = true -- use 256 colors
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -30,7 +31,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-    { 
+    {
+        -- Set colorscheme
+        'folke/tokyonight.nvim',
+	lazy = false,
+	priority = 1000,
+        config = function ()
+            vim.cmd[[colorscheme tokyonight]] 
+        end,
+    },
+    {  
         -- Set lualine as statusline
         'nvim-lualine/lualine.nvim', 
         config = true,
