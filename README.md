@@ -9,6 +9,8 @@ rm -rf dotfiles/.git
 
 # move docker-compose
 # include Dockerfile into Dockerfile.nvim
+# change container name in docker-compose
+# you can skip if set up nvim in container
 mv dotfiles/docker-compose.yml docker-compose.yml
 mv dotfiles/Dockerfile.nvim Dockerfile.nvim
 

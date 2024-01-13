@@ -11,6 +11,7 @@ services:
     volumes:
       - ".:/workspaces/${COMPOSE_PROJECT_NAME}"
       - "${SSH_AUTH_SOCK}:/tmp/ssh-agent.sock"
+      - "~/.gitconfig:/etc/gitconfig"
     environment:
       SSH_AUTH_SOCK: "/tmp/ssh-agent.sock"
       TERM: "xterm-256color"

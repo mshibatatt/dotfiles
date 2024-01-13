@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y curl git sudo tmux make gcc && \
     chmod u+x nvim.appimage && \
     ./nvim.appimage --appimage-extract && \
     ./squashfs-root/AppRun --version && \
-    ln -s /squashfs-root/AppRun /usr/bin/nvim
+    ln -s /squashfs-root/AppRun /usr/bin/nvim && \
+    rm nvim.appimage
 
 RUN groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME}
