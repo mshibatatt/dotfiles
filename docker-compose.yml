@@ -3,7 +3,7 @@ services:
   editor:
     build:
       context: .
-      dockerfile: Dockerfile.nvim
+      dockerfile: Dockerfile.r
       args:
         UID: 1000
         GID: 1000
@@ -12,6 +12,8 @@ services:
       - ".:/workspaces/${COMPOSE_PROJECT_NAME}"
       - "${SSH_AUTH_SOCK}:/tmp/ssh-agent.sock"
       - "~/.gitconfig:/etc/gitconfig"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
     environment:
       SSH_AUTH_SOCK: "/tmp/ssh-agent.sock"
       TERM: "xterm-256color"
+      DISPLAY: ${DISPLAY}

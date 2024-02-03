@@ -6,7 +6,7 @@ ARG GID
 ARG PROJECT
 ARG USERNAME=neovim
 
-RUN apt-get update && apt-get install -y curl git sudo tmux make gcc && \
+RUN apt-get update && apt-get install -y curl git sudo tmux make gcc ripgrep && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
     chmod u+x nvim.appimage && \

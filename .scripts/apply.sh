@@ -1,8 +1,33 @@
 #!/bin/bash
 
 script_dir=$(cd "$(dirname "$0")" && pwd)
+cd $script_dir
+cd ..
 
-cp -r $script_dir/../.config/nvim ~/.config/
-cp $script_dir/../.tmux.conf ~/
-nvim --headless +qa
+cp --parents .config/nvim/init.lua ~/
+cp --parents .config/nvim/lua/plugins/default.lua ~/
+cp .tmux.conf ~/
+
+# copy custom folder depending on option
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -r|--R)
+      cp --parents .config/nvim/lua/plugins/R.lua ~/
+      ;;
+    -py|--Python)
+      cp --parents .config/nvim/lua/plugins/Python.lua ~/
+      echo "Option B is selected"
+      ;;
+    -rs|--Rust)
+      cp --parents .config/nvim/lua/plugins/Rust.lua ~/
+      echo "Option C is selected"
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
 nvim --headless "+Lazy! sync" +qa
