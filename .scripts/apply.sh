@@ -13,6 +13,8 @@ while [[ "$#" -gt 0 ]]; do
   case $1 in
     -r|--R)
       cp --parents .config/nvim/lua/plugins/R.lua ~/
+      cp --parents .config/nvim/lua/custom/R.lua ~/
+      echo "require('custom.R')" >> ~/.config/nvim/init.lua
       ;;
     -py|--Python)
       cp --parents .config/nvim/lua/plugins/Python.lua ~/
