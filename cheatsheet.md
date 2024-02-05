@@ -1,4 +1,5 @@
-# CheatSheet
+# Cheatsheet
+Cheatsheet of (mainly) custom setting by the dotfiles.
 
 ## Neovim
 Leader is `<space>`
@@ -42,6 +43,8 @@ prefix is `<C-q>`
 s  # show sessions
 d  # detach from the session
 $  # rename session
+
+x  # delete pane
 
 |  # split pane horizonally
 -  # split pane vertically
