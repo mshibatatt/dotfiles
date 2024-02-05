@@ -46,7 +46,7 @@ $  # rename session
 
 x  # delete pane
 
-|  # split pane horizonally
+|  # split pane horizontally
 -  # split pane vertically
 h  # move pane to left
 j  # move pane to dowm
