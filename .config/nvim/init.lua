@@ -134,3 +134,8 @@ require('mason-lspconfig').setup_handlers {
     end,
 }
 
+-- Set up tab
+require("bufferline").setup{}
+
+-- Set up gitsign
+require('gitsigns').setup()

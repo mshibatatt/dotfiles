@@ -46,4 +46,12 @@ return {
     {
         'williamboman/mason-lspconfig.nvim'
     },
+    {
+        'akinsho/bufferline.nvim',
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons'
+    },
+    {
+        'lewis6991/gitsigns.nvim'
+    },
 }
