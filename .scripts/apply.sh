@@ -18,7 +18,8 @@ while [[ "$#" -gt 0 ]]; do
       ;;
     -py|--Python)
       cp --parents .config/nvim/lua/plugins/Python.lua ~/
-      echo "Option B is selected"
+      cp --parents .config/nvim/lua/custom/Python.lua ~/
+      echo "require('custom.Python')" >> ~/.config/nvim/init.lua
       ;;
     -rs|--Rust)
       cp --parents .config/nvim/lua/plugins/Rust.lua ~/

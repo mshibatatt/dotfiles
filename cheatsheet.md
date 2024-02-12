@@ -36,6 +36,13 @@ autocompletion
 <CR>  # cmp.mapping.confirm({ select = true })
 ```
 
+folding
+```
+zf{motion} or {Visual}zf  # create a fold
+zo  # open one fold under the cursor
+zO  # open all fold recursively:
+```
+
 ## tmux
 prefix is `<C-q>` 
 ```
