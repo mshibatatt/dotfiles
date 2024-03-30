@@ -47,8 +47,8 @@ return {
         'williamboman/mason-lspconfig.nvim'
     },
     {
-	'github/copilot.vim',
-	lazy=false,
+        'github/copilot.vim',
+        lazy=false,
     },
     {
         'akinsho/bufferline.nvim',
@@ -57,5 +57,8 @@ return {
     },
     {
         'lewis6991/gitsigns.nvim'
+    },
+    {
+        'karb94/neoscroll.nvim',
     },
 }

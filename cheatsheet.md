@@ -43,6 +43,42 @@ zo  # open one fold under the cursor
 zO  # open all fold recursively:
 ```
 
+Copilot
+```
+C-] # cancel current suggestion
+Tab # accept current suggestion
+Alt-] # next suggestion
+Alt-C-Right # accept current line
+Alt-Right # accept one word
+Alt-\  # Explicitly request a suggestion, even if Copilot is disabled
+```
+
+buffer
+```
+:e  # open file
+:bd  # close buffer
+:ls  # list buffer
+:b {buffer number}  # switch buffer
+```
+
+buffline
+```
+]b  # bufferline.cycle_next
+b]  # bufferline.cycle_prev
+```
+
+window
+prefix is `<C-w>`
+```
+s  # split window horizontally
+v  # split window vertically
+c  # close window
+h  # move pane to left
+j  # move pane to dowm
+k  # move pane to up
+l  # move pane to right
+```
+
 ## tmux
 prefix is `<C-q>` 
 ```
