@@ -47,6 +47,10 @@ return {
         'williamboman/mason-lspconfig.nvim'
     },
     {
+	'github/copilot.vim',
+	lazy=false,
+    },
+    {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons'
