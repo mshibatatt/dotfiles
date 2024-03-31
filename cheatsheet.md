@@ -65,6 +65,8 @@ buffline
 ```
 <leader>bn  # bufferline.cycle_next
 <leader>bp  # bufferline.cycle_prev
+gb  # bufferline.pick
+<leader>bd  # bufferline.pick_close
 <leader>sd  # bufferline.sort_by_directory
 ```
 

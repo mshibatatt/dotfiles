@@ -147,6 +147,8 @@ bufferline.setup {
 }
 vim.keymap.set('n', '<leader>bn', ':BufferLineCycleNext<CR>', {})
 vim.keymap.set('n', '<leader>bp', ':BufferLineCyclePrev<CR>', {})
+vim.keymap.set('n', 'gb', ':BufferLinePick<CR>', {})
+vim.keymap.set('n', '<leader>bd', ':BufferLinePickClose<CR>', {})
 vim.keymap.set('n', '<leader>sd', ':BufferLineSortByDirectory<CR>', {})
 
 -- Set up gitsign
