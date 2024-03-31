@@ -63,8 +63,9 @@ buffer
 
 buffline
 ```
-]b  # bufferline.cycle_next
-b]  # bufferline.cycle_prev
+<leader>bn  # bufferline.cycle_next
+<leader>bp  # bufferline.cycle_prev
+<leader>sd  # bufferline.sort_by_directory
 ```
 
 window

@@ -145,8 +145,9 @@ bufferline.setup {
         }
     }
 }
-vim.keymap.set('n', ']b', ':BufferLineCycleNext<CR>', {})
-vim.keymap.set('n', 'b[', ':BufferLineCyclePrev<CR>', {})
+vim.keymap.set('n', '<leader>bn', ':BufferLineCycleNext<CR>', {})
+vim.keymap.set('n', '<leader>bp', ':BufferLineCyclePrev<CR>', {})
+vim.keymap.set('n', '<leader>sd', ':BufferLineSortByDirectory<CR>', {})
 
 -- Set up gitsign
 require('gitsigns').setup()
