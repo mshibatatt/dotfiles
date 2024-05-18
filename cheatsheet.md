@@ -104,3 +104,8 @@ K  # resize pane to up (keep prefix for 500ms)
 L  # resize pane to right (keep prefix for 500ms)
 ```
 
+## R
+```
+:RMapsDesc # displays the list of key bindings followed by short descriptions.
+:RConfigShow # displays the list of configuration options and their current values.
+```

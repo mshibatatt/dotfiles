@@ -1,10 +1,8 @@
 -- R.lua 
 -- setup for R
+require("cmp_r").setup({ })
 
--- TODO; debug set_keymao
-vim.api.nvim_buf_set_keymap(0, 'n', '<C-CR>', '<Plug>RDSendLine', {})
-vim.api.nvim_buf_set_keymap(0, 'i', '<C-CR>', '<Plug>RDSendLine', {})
-vim.api.nvim_buf_set_keymap(0, 'v', '<C-CR>', '<Plug>RDSendLine', {})
-
--- disable shortcut of `<-`
-vim.g.R_assign = 0
+-- indent size is 2 in R
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
