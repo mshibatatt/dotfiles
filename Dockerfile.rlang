@@ -22,12 +22,15 @@ RUN npm install n -g && \
     apt-get purge -y nodejs npm && \
     apt-get autoremove -y
 
+# setup user
+RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
 # setup neovim
 COPY --chown=${USERNAME} dotfiles/.config/ /home/${USERNAME}/.config/
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
 COPY --chown=${USERNAME} dotfiles/.scripts /home/${USERNAME}/.scripts
-RUN echo "alias ide='sh ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
-    echo "alias apply_nvim='sh ~/.scripts/apply.sh --R'" >> /home/${USERNAME}/.bashrc && \
+RUN echo "alias ide='bash ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
+    echo "alias apply_nvim='bash ~/.scripts/apply.sh --R'" >> /home/${USERNAME}/.bashrc && \
     echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc 
 USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/

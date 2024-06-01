@@ -2,7 +2,7 @@ services:
   editor:
     build:
       context: .
-      dockerfile: Dockerfile.r
+      dockerfile: Dockerfile.nvim
       args:
         UID: 1000
         GID: 1000
