@@ -53,4 +53,7 @@ return {
       })
     end,
   },
+  {
+    "quarto-dev/quarto-nvim",
+  },
 }

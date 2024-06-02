@@ -5,10 +5,17 @@ ARG UID
 ARG GID
 ARG PROJECT
 ARG USERNAME=neovim
+ENV POETRY_HOME=/opt/poetry
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
-    tmux make gcc ripgrep nodejs npm && \
+    tmux make gcc ripgrep nodejs npm \
+    # Python and other dependencies
+    python3 python3-pip python3-venv \
+    lua5.1 luarocks libmagickwand-dev && \
+    luarocks --lua-version=5.1 install magick && \
+    curl -sSL https://install.python-poetry.org | python3 - && \
+    ln -s /opt/poetry/bin/poetry /usr/local/bin/poetry && \  
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
     chmod u+x nvim.appimage && \
@@ -32,6 +39,8 @@ RUN userdel -r ubuntu && \
 # setup neovim
 COPY --chown=${USERNAME} dotfiles/.config/nvim/init.lua /home/${USERNAME}/.config/nvim/init.lua
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${USERNAME}/.config/nvim/lua/plugins/default.lua
+COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/Python.lua /home/${USERNAME}/.config/nvim/lua/plugins/Python.lua
+COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/custom/Python.lua /home/${USERNAME}/.config/nvim/lua/custom/Python.lua
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
 COPY --chown=${USERNAME} dotfiles/.scripts /home/${USERNAME}/.scripts
 RUN echo "alias ide='bash ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
@@ -40,3 +49,4 @@ USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
 RUN nvim --headless "+Lazy! sync" +qa
+

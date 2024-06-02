@@ -22,8 +22,8 @@ while [[ "$#" -gt 0 ]]; do
       echo "require('custom.Python')" >> ~/.config/nvim/init.lua
       ;;
     -rs|--Rust)
-      cp --parents .config/nvim/lua/plugins/Rust.lua ~/
-      echo "Option C is selected"
+      cp --parents .config/nvim/lua/custom/Rust.lua ~/
+      echo "require('custom.Rust')" >> ~/.config/nvim/init.lua
       ;;
     *)
       echo "Unknown option: $1"
