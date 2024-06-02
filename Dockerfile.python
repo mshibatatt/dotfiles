@@ -11,9 +11,7 @@ RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
     tmux make gcc ripgrep nodejs npm \
     # Python and other dependencies
-    python3 python3-pip python3-venv \
-    lua5.1 luarocks libmagickwand-dev && \
-    luarocks --lua-version=5.1 install magick && \
+    python3 python3-venv && \
     curl -sSL https://install.python-poetry.org | python3 - && \
     ln -s /opt/poetry/bin/poetry /usr/local/bin/poetry && \  
     # nvim install 
