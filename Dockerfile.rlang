@@ -31,9 +31,9 @@ COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${U
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/R.lua /home/${USERNAME}/.config/nvim/lua/plugins/R.lua
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/custom/R.lua /home/${USERNAME}/.config/nvim/lua/custom/R.lua
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
-COPY --chown=${USERNAME} dotfiles/.scripts /home/${USERNAME}/.scripts
-RUN echo "alias ide='bash ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
-    echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc 
+RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
+    echo "require('custom.R')" >> /home/${USERNAME}/.config/nvim/init.lua
+
 USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
