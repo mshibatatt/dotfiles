@@ -37,4 +37,7 @@ RUN echo "alias ide='bash ~/.scripts/ide.sh'" >> /home/${USERNAME}/.bashrc && \
 USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
+# set renv cache in mounted folder
+ENV RENV_PATHS_CACHE /workspaces/${PROJECT}/renv/cache
+
 RUN nvim --headless "+Lazy! sync" +qa
