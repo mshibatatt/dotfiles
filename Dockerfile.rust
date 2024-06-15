@@ -6,6 +6,8 @@ ARG GID
 ARG PROJECT
 ARG USERNAME=neovim
 # for Rust
+# ARG RUST_VERSION=stable
+ARG RUST_VERSION="1.70"
 ENV RUSTUP_HOME="/root/.rustup" \
     CARGO_HOME="/root/.cargo" \
     PATH="/root/.cargo/bin:${PATH}"
@@ -16,7 +18,7 @@ RUN apt-get update && apt-get install -y curl git sudo \
     # install Rust
     curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     chmod -R +rx /root && \ 
-    rustup default stable && \
+    rustup default ${RUST_VERSION} && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
     chmod u+x nvim.appimage && \
