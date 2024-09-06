@@ -1,0 +1,58 @@
+FROM ubuntu:24.04
+
+ENV TZ Asia/Tokyo
+ARG UID
+ARG GID
+ARG PROJECT
+ARG USERNAME=neovim
+# for Rust
+# ARG RUST_VERSION=stable
+ARG RUST_VERSION="1.70"
+ENV RUSTUP_HOME="/root/.rustup" \
+    CARGO_HOME="/root/.cargo" \
+    PATH="/root/.cargo/bin:${PATH}"
+
+RUN apt-get update && apt-get install -y curl git sudo \
+    language-pack-ja-base language-pack-ja \
+    tmux make gcc ripgrep nodejs npm && \
+    # install Rust
+    curl https://sh.rustup.rs -sSf | bash -s -- -y && \
+    chmod -R +rx /root && \ 
+    rustup default ${RUST_VERSION} && \
+    # nvim install 
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
+    chmod u+x nvim.appimage && \
+    ./nvim.appimage --appimage-extract && \
+    ./squashfs-root/AppRun --version && \
+    ln -s /squashfs-root/AppRun /usr/bin/nvim && \
+    rm nvim.appimage 
+
+# update nodejs for copilot 
+RUN npm install n -g && \
+    n stable && \
+    apt-get purge -y nodejs npm && \
+    apt-get autoremove -y
+
+# setup user
+RUN userdel -r ubuntu && \
+    groupadd -g ${GID} ${USERNAME} && \
+    useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
+    echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# setup neovim
+COPY --chown=${USERNAME} dotfiles/.config/nvim/init.lua /home/${USERNAME}/.config/nvim/init.lua
+COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${USERNAME}/.config/nvim/lua/plugins/default.lua
+COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/custom/Rust.lua /home/${USERNAME}/.config/nvim/lua/custom/Rust.lua
+COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
+RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
+    echo "require('custom.Rust')" >> /home/${USERNAME}/.config/nvim/init.lua
+
+# enable run cargo
+RUN chown -R ${USERNAME} ${RUSTUP_HOME} && \
+    chown -R ${USERNAME} ${CARGO_HOME}
+
+USER ${USERNAME}
+WORKDIR /workspaces/${PROJECT}/
+
+
+RUN nvim --headless "+Lazy! sync" +qa
