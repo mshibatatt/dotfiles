@@ -37,6 +37,10 @@ return {
         }
     },
     {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate'
+    },
+    {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
@@ -60,5 +64,16 @@ return {
     },
     {
         'karb94/neoscroll.nvim',
+    },
+    {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            require("nvim-tree").setup {}
+        end,
     },
 }

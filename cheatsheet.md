@@ -25,6 +25,8 @@ gr  # vim.lsp.buf.references, opts)
 <leader>fg  # builtin.live_grep (need ripgrep package)
 <leader>fb  # builtin.buffers
 <leader>fh  # builtin.help_tags
+
+<leader>e  # NvimTreeToggle
 ```
 
 autocompletion
@@ -65,7 +67,7 @@ buffline
 ```
 <leader>bn  # bufferline.cycle_next
 <leader>bp  # bufferline.cycle_prev
-gb  # bufferline.pick
+<leader>bs  # bufferline.pick
 <leader>bd  # bufferline.pick_close
 <leader>sd  # bufferline.sort_by_directory
 ```

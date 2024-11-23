@@ -147,7 +147,7 @@ bufferline.setup {
 }
 vim.keymap.set('n', '<leader>bn', ':BufferLineCycleNext<CR>', {})
 vim.keymap.set('n', '<leader>bp', ':BufferLineCyclePrev<CR>', {})
-vim.keymap.set('n', 'gb', ':BufferLinePick<CR>', {})
+vim.keymap.set('n', '<leader>bs', ':BufferLinePick<CR>', {})
 vim.keymap.set('n', '<leader>bd', ':BufferLinePickClose<CR>', {})
 vim.keymap.set('n', '<leader>sd', ':BufferLineSortByDirectory<CR>', {})
 
@@ -162,3 +162,9 @@ require('neoscroll').setup({
         '<C-y>', '<C-e>',
     },
 })
+
+-- setup nvim-tree
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {})
