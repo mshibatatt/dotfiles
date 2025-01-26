@@ -4,9 +4,5 @@ return {
   },
   {
     "quarto-dev/quarto-nvim",
-  },
-  {
-    "GCBallesteros/jupytext.nvim",
-    config = true,
-  },
+  }
 }
