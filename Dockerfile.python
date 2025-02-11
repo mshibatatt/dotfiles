@@ -19,12 +19,12 @@ RUN apt-get update && apt-get install -y curl git sudo \
     # curl -sSL https://install.python-poetry.org | python3 - && \
     # ln -s /opt/poetry/bin/poetry /usr/local/bin/poetry && \  
     # nvim install 
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
-    chmod u+x nvim.appimage && \
-    ./nvim.appimage --appimage-extract && \
+    curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
+    chmod u+x nvim-linux-x86_64.appimage && \
+    ./nvim-linux-x86_64.appimage --appimage-extract && \
     ./squashfs-root/AppRun --version && \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
-    rm nvim.appimage 
+    rm nvim-linux-x86_64.appimage 
 
 # update nodejs for copilot 
 RUN npm install n -g && \

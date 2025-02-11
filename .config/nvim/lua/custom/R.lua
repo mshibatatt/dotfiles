@@ -3,7 +3,7 @@
 require("cmp_r").setup({ })
 require('mason-lspconfig').setup({
   ensure_installed = {
-    'r-languageserver',
+    'r_language_server',
   }
 })
 -- indent size is 2 in R

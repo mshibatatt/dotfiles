@@ -108,6 +108,9 @@ L  # resize pane to right (keep prefix for 500ms)
 
 ## R
 ```
+<leader>rf # start R session
+<leader>rq # quit R session
+<C-CR> # send line and go to next line
 :RMapsDesc # displays the list of key bindings followed by short descriptions.
 :RConfigShow # displays the list of configuration options and their current values.
 ```
