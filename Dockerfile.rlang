@@ -7,7 +7,10 @@ ARG PROJECT
 ARG USERNAME=rstudio
 
 RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
-    language-pack-ja-base language-pack-ja make gcc nodejs npm && \
+    language-pack-ja-base language-pack-ja make gcc && \
+    # git auto-completion
+    curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
+    echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -15,12 +18,6 @@ RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
     ./squashfs-root/AppRun --version && \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
-
-# update nodejs for copilot 
-RUN npm install n -g && \
-    n stable && \
-    apt-get purge -y nodejs npm && \
-    apt-get autoremove -y
 
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers

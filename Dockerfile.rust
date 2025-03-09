@@ -14,7 +14,10 @@ ENV RUSTUP_HOME="/root/.rustup" \
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
-    tmux make gcc ripgrep nodejs npm && \
+    tmux make gcc ripgrep && \
+    # git auto-completion
+    curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
+    echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc && \
     # install Rust
     curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     chmod -R +rx /root && \ 
@@ -26,12 +29,6 @@ RUN apt-get update && apt-get install -y curl git sudo \
     ./squashfs-root/AppRun --version && \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
-
-# update nodejs for copilot 
-RUN npm install n -g && \
-    n stable && \
-    apt-get purge -y nodejs npm && \
-    apt-get autoremove -y
 
 # setup user
 RUN userdel -r ubuntu && \
