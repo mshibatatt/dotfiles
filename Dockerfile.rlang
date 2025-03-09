@@ -8,9 +8,6 @@ ARG USERNAME=rstudio
 
 RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
     language-pack-ja-base language-pack-ja make gcc && \
-    # git auto-completion
-    curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
-    echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -21,6 +18,10 @@ RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
 
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# git auto-completion
+RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
+    echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc
 
 # setup neovim
 COPY --chown=${USERNAME} dotfiles/.config/nvim/init.lua /home/${USERNAME}/.config/nvim/init.lua
