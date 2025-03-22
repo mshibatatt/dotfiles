@@ -19,6 +19,17 @@ RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# basic env variables for Aider
+ENV AIDER_MODEL="sonnet"
+ENV AIDER_EDIT_FORMAT="diff"
+ENV AIDER_AUTO_COMMITS="false"
+# ANTHROPIC_API_KEY should be set throuht.env
+
+# install Aider
+RUN curl -LsSf https://aider.chat/install.sh | sh && \
+    chmod -R +rx /root
+ENV PATH="/root/.local/bin:${PATH}"
+
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc
