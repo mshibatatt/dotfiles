@@ -37,7 +37,7 @@ RUN userdel -r ubuntu && \
 ENV AIDER_MODEL="sonnet"
 ENV AIDER_EDIT_FORMAT="diff"
 ENV AIDER_AUTO_COMMITS="false"
-# ANTHROPIC_API_KEY should be set throuht.env
+# ANTHROPIC_API_KEY should be set through .env
 
 # install Aider
 RUN curl -LsSf https://aider.chat/install.sh | sh && \
@@ -54,6 +54,7 @@ COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${U
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/Python.lua /home/${USERNAME}/.config/nvim/lua/plugins/Python.lua
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/custom/Python.lua /home/${USERNAME}/.config/nvim/lua/custom/Python.lua
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
+COPY --chown=${USERNAME} dotfiles/.aiderignore /home/${USERNAME}/.aiderignore
 RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
     echo "require('custom.Python')" >> /home/${USERNAME}/.config/nvim/init.lua
 

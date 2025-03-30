@@ -23,7 +23,7 @@ RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 ENV AIDER_MODEL="sonnet"
 ENV AIDER_EDIT_FORMAT="diff"
 ENV AIDER_AUTO_COMMITS="false"
-# ANTHROPIC_API_KEY should be set throuht.env
+# ANTHROPIC_API_KEY should be set through .env
 
 # install Aider
 RUN curl -LsSf https://aider.chat/install.sh | sh && \
