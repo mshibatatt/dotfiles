@@ -45,10 +45,10 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
-        'williamboman/mason.nvim'
+        'mason-org/mason.nvim'
     },
     {
-        'williamboman/mason-lspconfig.nvim'
+        'mason-org/mason-lspconfig.nvim',
     },
     {
         'github/copilot.vim',
