@@ -45,16 +45,6 @@ zo  # open one fold under the cursor
 zO  # open all fold recursively:
 ```
 
-Copilot
-```
-C-] # cancel current suggestion
-Tab # accept current suggestion
-Alt-] # next suggestion
-Alt-C-Right # accept current line
-Alt-Right # accept one word
-Alt-\  # Explicitly request a suggestion, even if Copilot is disabled
-```
-
 buffer
 ```
 :e  # open file
@@ -67,9 +57,16 @@ buffline
 ```
 <leader>bn  # bufferline.cycle_next
 <leader>bp  # bufferline.cycle_prev
-<leader>bs  # bufferline.pick
+<leader>bc  # bufferline.pick
 <leader>bd  # bufferline.pick_close
 <leader>sd  # bufferline.sort_by_directory
+```
+
+diffview
+```
+<leader>gd  # diffview.Open
+<leader>gc  # diffview.Close
+<leader>gh  # diffview.current_file_history
 ```
 
 window
