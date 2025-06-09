@@ -51,16 +51,15 @@ return {
         'mason-org/mason-lspconfig.nvim',
     },
     {
-        'github/copilot.vim',
-        lazy=false,
-    },
-    {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons'
     },
     {
         'lewis6991/gitsigns.nvim'
+    },
+    {
+        'sindrets/diffview.nvim'
     },
     {
         'karb94/neoscroll.nvim',

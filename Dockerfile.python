@@ -8,7 +8,7 @@ ARG USERNAME=neovim
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
-    ca-certificates tmux make gcc ripgrep unzip && \
+    ca-certificates tmux make gcc ripgrep unzip nodejs npm && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -16,6 +16,13 @@ RUN apt-get update && apt-get install -y curl git sudo \
     ./squashfs-root/AppRun --version && \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
+
+# update nodejs for claude-code 
+RUN npm install n -g && \
+    n stable && \
+    apt-get purge -y nodejs npm && \
+    apt-get autoremove -y
+RUN npm install -g @anthropic-ai/claude-code
 
 # In case Python and poetry
 # RUN apt-get install -y python3 python3-venv && \
@@ -25,24 +32,13 @@ RUN apt-get update && apt-get install -y curl git sudo \
 # In case uv
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
 RUN sh /uv-installer.sh && rm /uv-installer.sh
-# ENV PATH="/root/.local/bin:${PATH}" # same path is set in setting Aider
+ENV PATH="/root/.local/bin:${PATH}" # same path is set in setting Aider
 
 # setup user
 RUN userdel -r ubuntu && \
     groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
     echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# basic env variables for Aider
-ENV AIDER_MODEL="sonnet"
-ENV AIDER_EDIT_FORMAT="diff"
-ENV AIDER_AUTO_COMMITS="false"
-# ANTHROPIC_API_KEY should be set through .env
-
-# install Aider
-RUN curl -LsSf https://aider.chat/install.sh | sh && \
-    chmod -R +rx /root
-ENV PATH="/root/.local/bin:${PATH}"
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \

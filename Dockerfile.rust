@@ -14,7 +14,7 @@ ENV RUSTUP_HOME="/root/.rustup" \
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
-    tmux make gcc ripgrep unzip && \
+    tmux make gcc ripgrep unzip nodejs npm && \
     # install Rust
     curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     chmod -R +rx /root && \ 
@@ -27,22 +27,18 @@ RUN apt-get update && apt-get install -y curl git sudo \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
 
+# update nodejs for claude-code 
+RUN npm install n -g && \
+    n stable && \
+    apt-get purge -y nodejs npm && \
+    apt-get autoremove -y
+RUN npm install -g @anthropic-ai/claude-code
+
 # setup user
 RUN userdel -r ubuntu && \
     groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
     echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# basic env variables for Aider
-ENV AIDER_MODEL="sonnet"
-ENV AIDER_EDIT_FORMAT="diff"
-ENV AIDER_AUTO_COMMITS="false"
-# ANTHROPIC_API_KEY should be set through .env
-
-# install Aider
-RUN curl -LsSf https://aider.chat/install.sh | sh && \
-    chmod -R +rx /root
-ENV PATH="/root/.local/bin:${PATH}"
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \

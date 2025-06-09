@@ -140,12 +140,14 @@ bufferline.setup {
 }
 vim.keymap.set('n', '<leader>bn', ':BufferLineCycleNext<CR>', {})
 vim.keymap.set('n', '<leader>bp', ':BufferLineCyclePrev<CR>', {})
-vim.keymap.set('n', '<leader>bs', ':BufferLinePick<CR>', {})
+vim.keymap.set('n', '<leader>bc', ':BufferLinePick<CR>', {})
 vim.keymap.set('n', '<leader>bd', ':BufferLinePickClose<CR>', {})
 vim.keymap.set('n', '<leader>sd', ':BufferLineSortByDirectory<CR>', {})
 
--- Set up gitsign
+-- Set up gitsigns and diffview
 require('gitsigns').setup()
+vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', {})
+vim.keymap.set('n', '<leader>gc', ':DiffviewClose<CR>', {})
 
 -- Set up neoscroll
 require('neoscroll').setup({

@@ -7,7 +7,7 @@ ARG PROJECT
 ARG USERNAME=rstudio
 
 RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
-    language-pack-ja-base language-pack-ja make gcc && \
+    language-pack-ja-base language-pack-ja make gcc nodejs npm && \
     # nvim install 
     curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -16,19 +16,15 @@ RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
     ln -s /squashfs-root/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
 
+# update nodejs for claude-code 
+RUN npm install n -g && \
+    n stable && \
+    apt-get purge -y nodejs npm && \
+    apt-get autoremove -y
+RUN npm install -g @anthropic-ai/claude-code
+
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# basic env variables for Aider
-ENV AIDER_MODEL="sonnet"
-ENV AIDER_EDIT_FORMAT="diff"
-ENV AIDER_AUTO_COMMITS="false"
-# ANTHROPIC_API_KEY should be set through .env
-
-# install Aider
-RUN curl -LsSf https://aider.chat/install.sh | sh && \
-    chmod -R +rx /root
-ENV PATH="/root/.local/bin:${PATH}"
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
