@@ -24,6 +24,12 @@ RUN npm install n -g && \
     apt-get autoremove -y
 RUN npm install -g @anthropic-ai/claude-code
 
+# setup user
+RUN userdel -r ubuntu && \
+    groupadd -g ${GID} ${USERNAME} && \
+    useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
+    echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
 # In case Python and poetry
 # RUN apt-get install -y python3 python3-venv && \
     # curl -sSL https://install.python-poetry.org | python3 - && \
@@ -31,14 +37,11 @@ RUN npm install -g @anthropic-ai/claude-code
 
 # In case uv
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-ENV PATH="/root/.local/bin:${PATH}" # same path is set in setting Aider
-
-# setup user
-RUN userdel -r ubuntu && \
-    groupadd -g ${GID} ${USERNAME} && \
-    useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
-    echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN sh /uv-installer.sh && \
+    rm /uv-installer.sh && \
+    mkdir -p /home/${USERNAME}/.local/bin && \
+    cp -r /root/.local/bin/ /home/${USERNAME}/.local/
+ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
@@ -50,7 +53,6 @@ COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${U
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/Python.lua /home/${USERNAME}/.config/nvim/lua/plugins/Python.lua
 COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/custom/Python.lua /home/${USERNAME}/.config/nvim/lua/custom/Python.lua
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
-COPY --chown=${USERNAME} dotfiles/.aiderignore /home/${USERNAME}/.aiderignore
 RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
     echo "require('custom.Python')" >> /home/${USERNAME}/.config/nvim/init.lua
 
