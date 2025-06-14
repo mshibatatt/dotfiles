@@ -40,7 +40,8 @@ ADD https://astral.sh/uv/install.sh /uv-installer.sh
 RUN sh /uv-installer.sh && \
     rm /uv-installer.sh && \
     mkdir -p /home/${USERNAME}/.local/bin && \
-    cp -r /root/.local/bin/ /home/${USERNAME}/.local/
+    cp -r /root/.local/bin/ /home/${USERNAME}/.local/ && \
+    chown -R ${USERNAME} /home/${USERNAME}/.local
 ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 
 # git auto-completion
