@@ -16,7 +16,7 @@ iron.setup {
     -- Your repl definitions come here
     repl_definition = {
       python = {
-        command = { "python3" },
+        command = { "uv", "run", "ipython", "--no-autoindent" },
         format = require("iron.fts.common").bracketed_paste,
       },
     },
