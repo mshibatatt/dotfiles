@@ -146,9 +146,9 @@ vim.keymap.set('n', '<leader>sd', ':BufferLineSortByDirectory<CR>', {})
 
 -- Set up gitsigns and diffview
 require('gitsigns').setup()
-vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', {})
-vim.keymap.set('n', '<leader>gc', ':DiffviewClose<CR>', {})
-vim.keymap.set('n', '<leader>gh', ':DiffviewFileHistory %<CR>', {})
+vim.keymap.set('n', '<leader>hd', ':DiffviewOpen<CR>', {})
+vim.keymap.set('n', '<leader>hc', ':DiffviewClose<CR>', {})
+vim.keymap.set('n', '<leader>hh', ':DiffviewFileHistory %<CR>', {})
 
 -- Set up neoscroll
 require('neoscroll').setup({
