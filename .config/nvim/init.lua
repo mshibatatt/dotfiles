@@ -14,6 +14,9 @@ vim.o.autoindent = true
 vim.o.showmode = false -- use lualine to show status
 vim.o.termguicolors = true -- use 256 colors
 
+-- update file in redrawing
+vim.keymap.set("n", "<C-l>", ":redraw! | checktime<CR>", {})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
