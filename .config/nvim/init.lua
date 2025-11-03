@@ -36,8 +36,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins')
 
 -- Setup language servers.
-local lspconfig = require('lspconfig')
-lspconfig.rust_analyzer.setup {}
+vim.lsp.enable('rust_analyzer')
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
