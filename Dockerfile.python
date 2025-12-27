@@ -4,19 +4,26 @@ ENV TZ Asia/Tokyo
 ARG UID
 ARG GID
 ARG PROJECT
+ARG TARGETARCH
 ARG USERNAME=neovim
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
     ca-certificates tmux make gcc ripgrep unzip nodejs npm \
-    python3 python3-venv && \
-    # nvim install 
-    curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage && \
-    chmod u+x nvim-linux-x86_64.appimage && \
-    ./nvim-linux-x86_64.appimage --appimage-extract && \
-    ./squashfs-root/AppRun --version && \
-    ln -s /squashfs-root/AppRun /usr/bin/nvim && \
-    rm nvim-linux-x86_64.appimage 
+    python3 python3-venv
+
+# nvim install
+RUN set -eux; \
+  case "${TARGETARCH}" in \
+    "amd64") NVIM_TGZ="nvim-linux-x86_64.tar.gz" ;; \
+    "arm64") NVIM_TGZ="nvim-linux-arm64.tar.gz" ;; \
+    *) echo "Unsupported arch: ${TARGETARCH}" >&2; exit 1 ;; \
+  esac; \
+  curl -fL "https://github.com/neovim/neovim/releases/download/stable/${NVIM_TGZ}" \
+    -o /tmp/nvim.tar.gz; \
+  tar -C /opt -xzf /tmp/nvim.tar.gz; \
+  rm -f /tmp/nvim.tar.gz; \
+  ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
 
 # update nodejs for claude-code 
 RUN npm install n -g && \
