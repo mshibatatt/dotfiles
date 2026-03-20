@@ -27,6 +27,9 @@ gr  # vim.lsp.buf.references, opts)
 <leader>fh  # builtin.help_tags
 
 <leader>e  # NvimTreeToggle
+
+<leader>ya  # yank entire file to clipboard
+<leader>y  # yank selection to clipboard (visual mode)
 ```
 
 autocompletion

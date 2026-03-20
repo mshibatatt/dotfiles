@@ -17,6 +17,11 @@ vim.o.termguicolors = true -- use 256 colors
 -- update file in redrawing
 vim.keymap.set("n", "<C-l>", ":redraw! | checktime<CR>", {})
 
+-- copy entire file to clipboard
+vim.keymap.set("n", "<leader>ya", ":%y+<CR>", { desc = "Yank all to clipboard" })
+-- copy selection to clipboard
+vim.keymap.set("v", "<leader>y", '"+y', { desc = "Yank selection to clipboard" })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
