@@ -6,6 +6,8 @@ ARG GID
 ARG PROJECT
 ARG TARGETARCH
 ARG USERNAME=neovim
+# add path for claude code
+ENV PATH="/root/.local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
