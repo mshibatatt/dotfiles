@@ -6,8 +6,6 @@ ARG GID
 ARG PROJECT
 ARG TARGETARCH
 ARG USERNAME=neovim
-# add path for claude code
-ENV PATH="/root/.local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
@@ -26,14 +24,17 @@ RUN set -eux; \
   rm -f /tmp/nvim.tar.gz; \
   ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
 
-# install claude code
-RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # setup user
 RUN userdel -r ubuntu && \
     groupadd -g ${GID} ${USERNAME} && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
     echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER ${USERNAME}
+
+# install claude code
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
@@ -45,7 +46,6 @@ COPY --chown=${USERNAME} dotfiles/.config/nvim/lua/plugins/default.lua /home/${U
 COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
 RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc 
 
-USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
 RUN nvim --headless "+Lazy! sync" +qa

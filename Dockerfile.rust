@@ -12,8 +12,6 @@ ARG RUST_VERSION="1.70"
 ENV RUSTUP_HOME="/root/.rustup" \
     CARGO_HOME="/root/.cargo" \
     PATH="/root/.cargo/bin:${PATH}"
-# add path for claude code
-ENV PATH="/root/.local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
@@ -45,6 +43,11 @@ RUN userdel -r ubuntu && \
     useradd -u ${UID} -g ${GID} -s /bin/bash -m ${USERNAME} && \ 
     echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+USER ${USERNAME}
+
+# install claude code
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
     echo "source ~/.git-completion.bash" >> /home/${USERNAME}/.bashrc
@@ -61,7 +64,6 @@ RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
 RUN chown -R ${USERNAME} ${RUSTUP_HOME} && \
     chown -R ${USERNAME} ${CARGO_HOME}
 
-USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
 

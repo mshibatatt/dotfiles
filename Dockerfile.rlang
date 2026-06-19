@@ -6,8 +6,6 @@ ARG GID
 ARG PROJECT
 ARG TARGETARCH
 ARG USERNAME=rstudio
-# add path for claude code
-ENV PATH="/root/.local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y curl git sudo tmux ripgrep \
     language-pack-ja-base language-pack-ja make gcc nodejs npm
@@ -25,11 +23,13 @@ RUN set -eux; \
   rm -f /tmp/nvim.tar.gz; \
   ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
 
-# install claude code
-RUN curl -fsSL https://claude.ai/install.sh | bash
-
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER ${USERNAME}
+
+# install claude code
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # git auto-completion
 RUN curl -o /home/${USERNAME}/.git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash && \
@@ -44,7 +44,6 @@ COPY --chown=${USERNAME} dotfiles/.tmux.conf /home/${USERNAME}/.tmux.conf
 RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
     echo "require('custom.R')" >> /home/${USERNAME}/.config/nvim/init.lua
 
-USER ${USERNAME}
 WORKDIR /workspaces/${PROJECT}/
 
 # set renv cache in mounted folder
