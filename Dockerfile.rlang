@@ -23,12 +23,8 @@ RUN set -eux; \
   rm -f /tmp/nvim.tar.gz; \
   ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
 
-# update nodejs for claude-code 
-RUN npm install n -g && \
-    n stable && \
-    apt-get purge -y nodejs npm && \
-    apt-get autoremove -y
-RUN npm install -g @anthropic-ai/claude-code
+# install claude code
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # setup user
 RUN echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers

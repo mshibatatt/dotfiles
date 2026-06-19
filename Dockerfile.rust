@@ -15,7 +15,7 @@ ENV RUSTUP_HOME="/root/.rustup" \
 
 RUN apt-get update && apt-get install -y curl git sudo \
     language-pack-ja-base language-pack-ja \
-    tmux make gcc ripgrep unzip nodejs npm && \
+    tmux make gcc ripgrep unzip && \
     # install Rust
     curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     chmod -R +rx /root && \ 
@@ -34,12 +34,8 @@ RUN set -eux; \
   rm -f /tmp/nvim.tar.gz; \
   ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
 
-# update nodejs for claude-code 
-RUN npm install n -g && \
-    n stable && \
-    apt-get purge -y nodejs npm && \
-    apt-get autoremove -y
-RUN npm install -g @anthropic-ai/claude-code
+# install claude code
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # setup user
 RUN userdel -r ubuntu && \
