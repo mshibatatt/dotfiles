@@ -61,8 +61,8 @@ RUN echo "alias tmux='tmux -u'" >> /home/${USERNAME}/.bashrc && \
     echo "require('custom.Rust')" >> /home/${USERNAME}/.config/nvim/init.lua
 
 # enable run cargo
-RUN chown -R ${USERNAME} ${RUSTUP_HOME} && \
-    chown -R ${USERNAME} ${CARGO_HOME}
+RUN sudo chown -R ${USERNAME} ${RUSTUP_HOME} && \
+    sudo chown -R ${USERNAME} ${CARGO_HOME}
 
 WORKDIR /workspaces/${PROJECT}/
 
